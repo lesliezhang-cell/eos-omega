@@ -9,6 +9,7 @@
     "start": "astro dev --port 4330",
     "build": "astro build",
     "preview": "astro preview --port 4330",
+    "deploy": "bash deploy.sh",
     "astro": "astro"
   },
   "dependencies": {
