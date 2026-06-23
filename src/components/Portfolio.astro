@@ -1,0 +1,266 @@
+---
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const lang = getLangFromUrl(Astro.url);
+const c = getContent(lang);
+
+interface Props {
+  showHead?: boolean;
+}
+const { showHead = true } = Astro.props;
+const monogram = (name: string) => name.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
+
+const all = c.portfolio.filterAll;
+const categories = [all, ...Array.from(new Set(c.portfolio.companies.map((x) => x.category)))];
+const cohorts = [all, ...Array.from(new Set(c.portfolio.companies.map((x) => x.cohort)))];
+---
+
+<section class="section" id="portfolio">
+  <div class="container">
+    {
+      showHead && (
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">{c.portfolio.eyebrow}</p>
+          <h2 style="margin:18px 0 16px">{c.portfolio.title}</h2>
+          <p>{c.portfolio.subtitle}</p>
+        </div>
+      )
+    }
+
+    <div class="pf-aggregate" data-reveal>
+      {
+        c.portfolio.aggregate.map((s) => (
+          <div class="pf-agg">
+            <span class="pf-agg-val glow-text">{s.value}</span>
+            <span class="pf-agg-label">{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="pf-filters" data-reveal>
+      <div class="filter-group" data-filter-type="category">
+        {
+          categories.map((cat, i) => (
+            <button class:list={['filter-chip', i === 0 && 'active']} data-value={i === 0 ? 'all' : cat}>
+              {cat}
+            </button>
+          ))
+        }
+      </div>
+      <div class="filter-group cohort" data-filter-type="cohort">
+        {
+          cohorts.map((co, i) => (
+            <button class:list={['filter-chip', i === 0 && 'active']} data-value={i === 0 ? 'all' : co}>
+              {co}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="portfolio-grid" id="pf-grid">
+      {
+        c.portfolio.companies.map((co, i) => (
+          <article
+            class="card co"
+            data-category={co.category}
+            data-cohort={co.cohort}
+            data-reveal
+            style={`--reveal-delay:${(i % 3) * 70}ms`}
+          >
+            <div class="co-top">
+              <span class="co-mono">{monogram(co.name)}</span>
+              <span class="chip">{co.category}</span>
+            </div>
+            <h3>{co.name}</h3>
+            <p>{co.desc}</p>
+            <div class="co-foot">
+              <span class="co-stat mono">{co.stat}</span>
+              <span class="co-cohort mono">{co.cohort}</span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <p class="pf-empty" id="pf-empty" hidden>—</p>
+  </div>
+</section>
+
+<style>
+  .pf-aggregate {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 28px 0;
+    margin-bottom: 36px;
+    border-block: 1px solid var(--border);
+  }
+  .pf-agg {
+    text-align: center;
+  }
+  .pf-agg-val {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    line-height: 1;
+    background: linear-gradient(150deg, #fff, #ffc9c9 70%, var(--red-400));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .pf-agg-label {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .pf-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .filter-group.cohort {
+    opacity: 0.95;
+  }
+  .filter-chip {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 0.5em 0.95em;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--surface);
+    transition: all 0.2s var(--ease);
+  }
+  .filter-chip:hover {
+    border-color: var(--border-red);
+    color: var(--text);
+  }
+  .filter-chip.active {
+    color: #fff;
+    background: var(--brand-gradient);
+    border-color: transparent;
+    box-shadow: var(--glow-sm);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .co {
+    padding: 28px;
+  }
+  .co.is-hidden {
+    display: none;
+  }
+  .co-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .co-mono {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #fff;
+    background: var(--brand-gradient);
+    box-shadow: var(--glow-sm);
+  }
+  .co h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .co p {
+    font-size: 0.94rem;
+    min-height: 2.8em;
+  }
+  .co-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .co-stat {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--red-300);
+  }
+  .co-cohort {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  .pf-empty {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 40px 0;
+  }
+  @media (max-width: 920px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pf-filters {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 600px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+    .pf-aggregate {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+  }
+</style>
+
+<script>
+  function initPortfolioFilter() {
+    const grid = document.getElementById('pf-grid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.co'));
+    const empty = document.getElementById('pf-empty');
+    const active: Record<string, string> = { category: 'all', cohort: 'all' };
+
+    document.querySelectorAll<HTMLElement>('.pf-filters .filter-group').forEach((group) => {
+      const type = group.dataset.filterType!;
+      group.querySelectorAll<HTMLButtonElement>('.filter-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          active[type] = btn.dataset.value!;
+          group.querySelectorAll('.filter-chip').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          let shown = 0;
+          cards.forEach((card) => {
+            const okCat = active.category === 'all' || card.dataset.category === active.category;
+            const okCo = active.cohort === 'all' || card.dataset.cohort === active.cohort;
+            const show = okCat && okCo;
+            card.classList.toggle('is-hidden', !show);
+            if (show) shown++;
+          });
+          if (empty) empty.hidden = shown !== 0;
+        });
+      });
+    });
+  }
+  initPortfolioFilter();
+  document.addEventListener('astro:page-load', initPortfolioFilter);
+</script>

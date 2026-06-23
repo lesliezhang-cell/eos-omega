@@ -1,0 +1,57 @@
+---
+import BrandMark from './BrandMark.astro';
+interface Props {
+  size?: number;
+  showText?: boolean;
+  id?: string;
+}
+const { size = 38, showText = true, id = 'logo' } = Astro.props;
+---
+
+<span class="logo">
+  <BrandMark size={size} id={id} />
+  {
+    showText && (
+      <span class="logo-text">
+        <span class="logo-name">
+          EOS <span class="omega">OMEGA</span>
+        </span>
+        <span class="logo-sub">ACCELERATION</span>
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.12rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .logo-name .omega {
+    background: var(--brand-gradient-soft);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .logo-sub {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.42em;
+    color: var(--text-dim);
+    margin-top: 4px;
+    padding-left: 2px;
+  }
+</style>

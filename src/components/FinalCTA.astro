@@ -1,0 +1,79 @@
+---
+import { getContent } from '../i18n/content';
+import { getLangFromUrl, localizePath } from '../i18n/config';
+const lang = getLangFromUrl(Astro.url);
+const c = getContent(lang);
+const applyHref = localizePath('/apply', lang);
+const aboutHref = localizePath('/about', lang);
+---
+
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-box" data-reveal>
+      <div class="cta-glow" aria-hidden="true"></div>
+      <p class="eyebrow">{c.finalCta.eyebrow}</p>
+      <h2>{c.finalCta.title}</h2>
+      <p class="lead">{c.finalCta.subtitle}</p>
+      <div class="cta-actions">
+        <a href={applyHref} class="btn btn-primary btn-lg">
+          {c.finalCta.primary}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href={aboutHref} class="btn btn-ghost btn-lg">{c.finalCta.secondary}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding-block: clamp(60px, 9vw, 110px);
+  }
+  .cta-box {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: clamp(48px, 7vw, 88px) 32px;
+    border: 1px solid var(--border-red);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(255, 36, 36, 0.08), var(--surface));
+  }
+  .cta-glow {
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(255, 36, 36, 0.22), transparent 60%);
+    filter: blur(30px);
+    pointer-events: none;
+  }
+  .cta-box > * {
+    position: relative;
+  }
+  .cta-box .eyebrow {
+    justify-content: center;
+    display: inline-flex;
+    margin-bottom: 20px;
+  }
+  .cta-box h2 {
+    max-width: 18ch;
+    margin: 0 auto 18px;
+  }
+  .cta-box .lead {
+    max-width: 52ch;
+    margin: 0 auto 36px;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 560px) {
+    .cta-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

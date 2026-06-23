@@ -1,0 +1,24 @@
+---
+import PageHero from './PageHero.astro';
+import Programs from './Programs.astro';
+import Offer from './Offer.astro';
+import Grants from './Grants.astro';
+import TokenLaunch from './TokenLaunch.astro';
+import DemoDay from './DemoDay.astro';
+import Process from './Process.astro';
+import FAQ from './FAQ.astro';
+import FinalCTA from './FinalCTA.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+---
+
+<PageHero eyebrow={c.programs.eyebrow} title={c.programs.title} subtitle={c.programs.subtitle} />
+<Programs showHead={false} />
+<Offer />
+<Grants />
+<TokenLaunch />
+<DemoDay />
+<Process />
+<FAQ />
+<FinalCTA />

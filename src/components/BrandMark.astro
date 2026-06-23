@@ -1,0 +1,65 @@
+---
+/**
+ * EOS OMEGA brandmark — Omega (Ω) ring enclosing the EOS crystal.
+ * SVG rendition so it scales crisply and can glow. Swap with the official
+ * vector asset by replacing this file or dropping it in /public/brand/.
+ */
+interface Props {
+  size?: number;
+  glow?: boolean;
+  class?: string;
+  id?: string;
+}
+const { size = 48, glow = true, class: klass = '', id = 'bm' } = Astro.props;
+const gid = `${id}-grad`;
+const gidGem = `${id}-gem`;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 120 120"
+  fill="none"
+  class:list={['brandmark', glow && 'is-glow', klass]}
+  role="img"
+  aria-label="EOS OMEGA"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id={gid} x1="20" y1="8" x2="100" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff5a5a" />
+      <stop offset="0.55" stop-color="#e0121b" />
+      <stop offset="1" stop-color="#7e0309" />
+    </linearGradient>
+    <linearGradient id={gidGem} x1="60" y1="18" x2="60" y2="86" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff8a8a" />
+      <stop offset="1" stop-color="#e0121b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Omega ring (open at the bottom) -->
+  <path
+    d="M 36 87 A 40 40 0 1 1 84 87"
+    stroke={`url(#${gid})`}
+    stroke-width="11"
+    stroke-linecap="round"
+  />
+  <!-- Omega feet -->
+  <path d="M 20 92 L 42 92" stroke={`url(#${gid})`} stroke-width="11" stroke-linecap="round" />
+  <path d="M 78 92 L 100 92" stroke={`url(#${gid})`} stroke-width="11" stroke-linecap="round" />
+
+  <!-- EOS crystal -->
+  <g stroke={`url(#${gidGem})`} stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M60 22 L80 41 L74 67 L60 86 L46 67 L40 41 Z" />
+    <path d="M40 41 L80 41" opacity="0.9" />
+    <path d="M60 22 L60 86" opacity="0.75" />
+    <path d="M40 41 L60 86" opacity="0.6" />
+    <path d="M80 41 L60 86" opacity="0.6" />
+  </g>
+</svg>
+
+<style>
+  .brandmark.is-glow {
+    filter: drop-shadow(0 0 10px rgba(255, 40, 40, 0.55));
+  }
+</style>

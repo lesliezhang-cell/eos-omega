@@ -1,0 +1,169 @@
+---
+import BrandMark from './BrandMark.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+const t = c.team;
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+---
+
+<section class="section" id="mentors">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 style="margin:18px 0 16px">{t.title}</h2>
+      <p>{t.subtitle}</p>
+    </div>
+
+    <div class="team-grid">
+      {
+        t.people.map((p, i) => (
+          <article class="card person" data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+            <span class="person-avatar">{initials(p.name)}</span>
+            <div class="person-info">
+              <h3>{p.name}</h3>
+              <span class="person-role">{p.role}</span>
+              <span class="person-org mono">{p.org}</span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <figure class="quote-card" data-reveal>
+      <span class="quote-mark" aria-hidden="true">“</span>
+      <blockquote>{c.testimonial.quote}</blockquote>
+      <figcaption>
+        <span class="quote-avatar"><BrandMark size={28} id="quote" /></span>
+        <span>
+          <strong>{c.testimonial.author}</strong>
+          <span class="quote-role">{c.testimonial.role}</span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <p class="team-note mono">{t.note}</p>
+  </div>
+</section>
+
+<style>
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .person {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 24px;
+  }
+  .person-avatar {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--red-200, #ffd2d2);
+    background: linear-gradient(150deg, rgba(255, 36, 36, 0.18), rgba(255, 36, 36, 0.04));
+    border: 1px solid var(--border-red);
+  }
+  .person-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .person-info h3 {
+    font-size: 1.12rem;
+  }
+  .person-role {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .person-org {
+    font-size: 0.74rem;
+    color: var(--text-dim);
+  }
+
+  .quote-card {
+    position: relative;
+    padding: 44px 48px;
+    border: 1px solid var(--border-red);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, rgba(255, 36, 36, 0.07), var(--surface));
+    box-shadow: var(--glow-sm);
+  }
+  .quote-mark {
+    position: absolute;
+    top: 6px;
+    left: 28px;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--red-700);
+    opacity: 0.5;
+    line-height: 1;
+  }
+  blockquote {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.45;
+    color: var(--text);
+    margin-bottom: 26px;
+    max-width: 60ch;
+  }
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .quote-avatar {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--border-red);
+    background: var(--bg-2);
+  }
+  figcaption strong {
+    display: block;
+    font-family: var(--font-display);
+    color: var(--text);
+  }
+  .quote-role {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+  }
+  .team-note {
+    margin-top: 16px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  @media (max-width: 900px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+    .quote-card {
+      padding: 32px;
+    }
+  }
+</style>

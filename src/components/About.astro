@@ -1,0 +1,90 @@
+---
+import BrandMark from './BrandMark.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+---
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-lead">
+        <p class="eyebrow" data-reveal>{c.about.eyebrow}</p>
+        <h2 data-reveal style="--reveal-delay:60ms">{c.about.title}</h2>
+        <p class="lead" data-reveal style="--reveal-delay:120ms">{c.about.body}</p>
+      </div>
+      <div class="about-mark" data-reveal style="--reveal-delay:120ms" aria-hidden="true">
+        <BrandMark size={200} id="about" />
+        <span class="omega-char">Ω</span>
+      </div>
+    </div>
+
+    <div class="about-points grid cols-3">
+      {
+        c.about.points.map((p, i) => (
+          <article class="card point" data-reveal style={`--reveal-delay:${i * 100}ms`}>
+            <span class="point-index mono">0{i + 1}</span>
+            <h3>{p.title}</h3>
+            <p>{p.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 56px;
+  }
+  .about-lead h2 {
+    margin: 18px 0 22px;
+  }
+  .about-mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 220px;
+  }
+  .omega-char {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 16rem;
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    background: radial-gradient(circle at 50% 40%, rgba(255, 60, 60, 0.16), transparent 60%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    z-index: -1;
+    user-select: none;
+  }
+  .point {
+    padding: 30px;
+  }
+  .point-index {
+    font-size: 0.82rem;
+    color: var(--red-400);
+    letter-spacing: 0.1em;
+  }
+  .point h3 {
+    margin: 14px 0 10px;
+    font-size: 1.25rem;
+  }
+  .point p {
+    font-size: 0.96rem;
+  }
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .about-mark {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+const t = c.tokenLaunch;
+---
+
+<section class="section" id="token">
+  <div class="container">
+    <div class="section-head center" data-reveal>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2>{t.title}</h2>
+      <p>{t.subtitle}</p>
+    </div>
+
+    <div class="tl-grid">
+      <article class="card tl-card" data-reveal>
+        <div class="tl-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/><path d="M9 12h6M9 16h6"/></svg>
+        </div>
+        <h3>{t.terms.title}</h3>
+        <p>{t.terms.body}</p>
+        <ul class="tl-points">
+          {
+            t.terms.points.map((p) => (
+              <li>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8.5l3.2 3.2L13 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {p}
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+
+      <article class="card tl-card featured" data-reveal style="--reveal-delay:100ms">
+        <div class="tl-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c7-1 13-7 14-14"/><path d="M14 5h5v5"/><path d="M5 19l3-3"/></svg>
+        </div>
+        <h3>{t.support.title}</h3>
+        <p>{t.support.body}</p>
+        <ul class="tl-points">
+          {
+            t.support.items.map((p) => (
+              <li>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8.5l3.2 3.2L13 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {p}
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .tl-card {
+    padding: 38px;
+    height: 100%;
+  }
+  .tl-card.featured {
+    border-color: var(--border-red);
+    background: linear-gradient(180deg, rgba(255, 36, 36, 0.07), var(--surface));
+  }
+  .tl-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 36, 36, 0.12), rgba(255, 36, 36, 0.03));
+    border: 1px solid var(--border-red);
+    color: var(--red-400);
+    margin-bottom: 22px;
+  }
+  .tl-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+  .tl-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 12px;
+  }
+  .tl-card > p {
+    font-size: 0.98rem;
+    margin-bottom: 22px;
+  }
+  .tl-points {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .tl-points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.94rem;
+    color: var(--text-muted);
+  }
+  .tl-points svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--red-400);
+  }
+  @media (max-width: 800px) {
+    .tl-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

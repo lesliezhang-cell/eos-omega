@@ -1,0 +1,16 @@
+---
+import PageHero from './PageHero.astro';
+import Portfolio from './Portfolio.astro';
+import Stats from './Stats.astro';
+import Mentors from './Mentors.astro';
+import FinalCTA from './FinalCTA.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+---
+
+<PageHero eyebrow={c.portfolio.eyebrow} title={c.portfolio.title} subtitle={c.portfolio.subtitle} />
+<Portfolio showHead={false} />
+<Stats />
+<Mentors />
+<FinalCTA />

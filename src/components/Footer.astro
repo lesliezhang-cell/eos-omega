@@ -1,0 +1,163 @@
+---
+import Logo from './Logo.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl, localizePath } from '../i18n/config';
+
+const url = Astro.url;
+const lang = getLangFromUrl(url);
+const c = getContent(lang);
+const year = 2026;
+
+const social = [
+  { label: 'X', href: 'https://x.com' },
+  { label: 'Telegram', href: 'https://telegram.org' },
+  { label: 'Discord', href: 'https://discord.com' },
+  { label: 'GitHub', href: 'https://github.com' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <Logo size={40} id="ftr" />
+        <p class="footer-tagline">{c.footer.tagline}</p>
+        <div class="chip"><span class="dot"></span>{c.official}</div>
+      </div>
+
+      <div class="footer-cols">
+        {
+          c.footer.cols.map((col) => (
+            <div class="footer-col">
+              <h4>{col.title}</h4>
+              <ul>
+                {col.links.map((link) => (
+                  <li>
+                    <a href={localizePath('/', lang)}>{link}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="footer-bottom">
+      <p class="footer-rights">© {year} {c.brand.full}. {c.footer.rights}</p>
+      <div class="footer-social">
+        {social.map((s) => <a href={s.href} target="_blank" rel="noopener">{s.label}</a>)}
+      </div>
+      <div class="footer-legal">
+        {c.footer.legal.map((l) => <a href={localizePath('/', lang)}>{l}</a>)}
+      </div>
+    </div>
+
+    <p class="footer-disclaimer">{c.footer.disclaimer}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, transparent, rgba(123, 4, 9, 0.06));
+    padding-block: 72px 40px;
+    margin-top: 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: 56px;
+    margin-bottom: 48px;
+  }
+  .footer-tagline {
+    margin: 22px 0 18px;
+    max-width: 320px;
+    color: var(--text-muted);
+  }
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-col a {
+    color: var(--text-muted);
+    font-size: 0.94rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover {
+    color: var(--red-400);
+  }
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding-top: 28px;
+  }
+  .footer-rights {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+  }
+  .footer-social {
+    display: flex;
+    gap: 22px;
+  }
+  .footer-social a {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .footer-social a:hover {
+    color: var(--red-400);
+  }
+  .footer-legal {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-legal a {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+  .footer-legal a:hover {
+    color: var(--text-muted);
+  }
+  .footer-disclaimer {
+    margin-top: 28px;
+    font-size: 0.76rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+  @media (max-width: 860px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  @media (max-width: 560px) {
+    .footer-cols {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

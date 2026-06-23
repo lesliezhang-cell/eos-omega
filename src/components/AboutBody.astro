@@ -1,0 +1,68 @@
+---
+import PageHero from './PageHero.astro';
+import Stats from './Stats.astro';
+import Mentors from './Mentors.astro';
+import FinalCTA from './FinalCTA.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const lang = getLangFromUrl(Astro.url);
+const c = getContent(lang);
+const a = c.aboutPage;
+---
+
+<PageHero eyebrow={a.eyebrow} title={a.title} subtitle={a.intro} />
+
+<Stats />
+
+<section class="section">
+  <div class="container">
+    <div class="mission" data-reveal>
+      <p class="eyebrow">{a.missionTitle}</p>
+      <h2>{a.mission}</h2>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <p class="eyebrow" data-reveal style="margin-bottom:36px">{a.valuesTitle}</p>
+    <div class="values grid cols-2">
+      {
+        a.values.map((v, i) => (
+          <article class="card value" data-reveal style={`--reveal-delay:${(i % 2) * 100}ms`}>
+            <span class="value-num mono">0{i + 1}</span>
+            <h3>{v.title}</h3>
+            <p>{v.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<Mentors />
+<FinalCTA />
+
+<style>
+  .mission {
+    max-width: 940px;
+  }
+  .mission h2 {
+    margin-top: 22px;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .value {
+    padding: 34px;
+  }
+  .value-num {
+    font-size: 0.85rem;
+    color: var(--red-400);
+    letter-spacing: 0.1em;
+  }
+  .value h3 {
+    margin: 14px 0 10px;
+    font-size: 1.3rem;
+  }
+</style>

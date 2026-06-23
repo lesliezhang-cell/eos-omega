@@ -1,0 +1,19 @@
+---
+import PageHero from './PageHero.astro';
+import Tracks from './Tracks.astro';
+import Events from './Events.astro';
+import Community from './Community.astro';
+import Jobs from './Jobs.astro';
+import FinalCTA from './FinalCTA.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+const e = c.ecosystemPage;
+---
+
+<PageHero eyebrow={e.eyebrow} title={e.title} subtitle={e.subtitle} />
+<Tracks />
+<Events />
+<Community />
+<Jobs />
+<FinalCTA />

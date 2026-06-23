@@ -1,0 +1,117 @@
+---
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+const j = c.jobs;
+const monogram = (name: string) => name.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
+---
+
+<section class="section" id="jobs">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{j.eyebrow}</p>
+      <h2 style="margin:18px 0 16px">{j.title}</h2>
+      <p>{j.subtitle}</p>
+    </div>
+
+    <ul class="jobs-list" data-reveal>
+      {
+        j.roles.map((r) => (
+          <li class="job-row">
+            <span class="job-mono">{monogram(r.company)}</span>
+            <div class="job-main">
+              <h3>{r.role}</h3>
+              <span class="job-company">{r.company}</span>
+            </div>
+            <span class="chip job-tag">{r.tag}</span>
+            <span class="job-loc mono">{r.location}</span>
+            <span class="job-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="jobs-note mono">{j.note}</p>
+  </div>
+</section>
+
+<style>
+  .jobs-list {
+    border-top: 1px solid var(--border);
+  }
+  .job-row {
+    display: grid;
+    grid-template-columns: 48px 1fr auto auto 34px;
+    gap: 22px;
+    align-items: center;
+    padding: 20px 8px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.25s var(--ease), padding 0.25s var(--ease);
+    cursor: pointer;
+  }
+  .job-row:hover {
+    background: var(--surface);
+    padding-inline: 18px;
+  }
+  .job-mono {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    color: #fff;
+    background: var(--brand-gradient);
+    box-shadow: var(--glow-sm);
+  }
+  .job-main h3 {
+    font-size: 1.12rem;
+    margin-bottom: 3px;
+  }
+  .job-company {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .job-loc {
+    font-size: 0.84rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .job-arrow {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    color: var(--red-400);
+    transition: all 0.25s var(--ease);
+  }
+  .job-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+  .job-row:hover .job-arrow {
+    background: var(--brand-gradient);
+    border-color: transparent;
+    color: #fff;
+  }
+  .jobs-note {
+    margin-top: 18px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  @media (max-width: 720px) {
+    .job-row {
+      grid-template-columns: 44px 1fr 34px;
+      gap: 16px;
+    }
+    .job-tag,
+    .job-loc {
+      display: none;
+    }
+  }
+</style>

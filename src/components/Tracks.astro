@@ -1,0 +1,94 @@
+---
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+const c = getContent(getLangFromUrl(Astro.url));
+const t = c.tracks;
+---
+
+<section class="section" id="tracks">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 style="margin:18px 0 16px">{t.title}</h2>
+      <p>{t.subtitle}</p>
+    </div>
+
+    <div class="tracks-grid">
+      {
+        t.items.map((item, i) => (
+          <article class="card track-card" data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+            <span class="chip"><span class="dot" />{item.tag}</span>
+            <h3>{item.name}</h3>
+            <p>{item.desc}</p>
+            <span class="track-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+        ))
+      }
+    </div>
+    <p class="tracks-note mono">{t.note}</p>
+  </div>
+</section>
+
+<style>
+  .tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .track-card {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+  }
+  .track-card .chip {
+    align-self: flex-start;
+    margin-bottom: 20px;
+  }
+  .track-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .track-card p {
+    font-size: 0.94rem;
+    flex-grow: 1;
+  }
+  .track-arrow {
+    margin-top: 18px;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    color: var(--red-400);
+    transition: all 0.25s var(--ease);
+  }
+  .track-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+  .track-card:hover .track-arrow {
+    background: var(--brand-gradient);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: var(--glow-sm);
+  }
+  .tracks-note {
+    margin-top: 20px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  @media (max-width: 920px) {
+    .tracks-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .tracks-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
