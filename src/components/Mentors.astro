@@ -75,9 +75,9 @@ const initials = (name: string) =>
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--red-200, #ffd2d2);
-    background: linear-gradient(150deg, rgba(255, 36, 36, 0.18), rgba(255, 36, 36, 0.04));
-    border: 1px solid var(--border-red);
+    color: var(--red-400);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
   }
   .person-info {
     display: flex;
@@ -100,10 +100,9 @@ const initials = (name: string) =>
   .quote-card {
     position: relative;
     padding: 44px 48px;
-    border: 1px solid var(--border-red);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    background: linear-gradient(160deg, rgba(255, 36, 36, 0.07), var(--surface));
-    box-shadow: var(--glow-sm);
+    background: var(--surface-2);
   }
   .quote-mark {
     position: absolute;
@@ -136,7 +135,7 @@ const initials = (name: string) =>
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    border: 1px solid var(--border-red);
+    border: 1px solid var(--border);
     background: var(--bg-2);
   }
   figcaption strong {

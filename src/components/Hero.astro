@@ -13,7 +13,6 @@ const programsHref = localizePath('/programs', lang);
   <div class="hero-mark" aria-hidden="true">
     <BrandMark size={620} glow={false} id="hero-bg" />
   </div>
-  <div class="hero-halo" aria-hidden="true"></div>
 
   <div class="container hero-inner">
     <div class="hero-badge" data-reveal>
@@ -55,22 +54,10 @@ const programsHref = localizePath('/programs', lang);
   }
   .hero-mark {
     position: absolute;
-    top: 44%;
+    top: 46%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0.07;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .hero-halo {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    width: 720px;
-    height: 720px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255, 36, 36, 0.22), transparent 62%);
-    filter: blur(40px);
+    opacity: 0.04;
     pointer-events: none;
     z-index: 0;
   }
@@ -83,11 +70,11 @@ const programsHref = localizePath('/programs', lang);
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 16px 8px 8px;
-    border: 1px solid var(--border-red);
+    padding: 7px 15px 7px 7px;
+    border: 1px solid var(--border-strong);
     border-radius: 100px;
-    background: rgba(255, 36, 36, 0.06);
-    font-size: 0.86rem;
+    background: var(--surface);
+    font-size: 0.85rem;
     color: var(--text);
     margin-bottom: 30px;
   }
@@ -98,10 +85,7 @@ const programsHref = localizePath('/programs', lang);
     max-width: 16ch;
   }
   h1 .hi {
-    background: linear-gradient(120deg, #ff7a7a, var(--red-500));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--red-500);
   }
   .hero-sub {
     margin-top: 28px;

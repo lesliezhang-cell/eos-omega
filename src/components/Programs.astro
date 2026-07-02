@@ -79,8 +79,7 @@ const { showHead = true } = Astro.props;
   }
   .track.featured {
     border-color: var(--border-red);
-    background: linear-gradient(180deg, rgba(255, 36, 36, 0.08), var(--surface));
-    box-shadow: var(--glow-sm);
+    background: var(--surface-2);
     transform: translateY(-8px);
   }
   .track.featured:hover {
@@ -91,7 +90,6 @@ const { showHead = true } = Astro.props;
     top: 22px;
     right: 24px;
     color: var(--red-400);
-    text-shadow: var(--glow-sm);
   }
   .track-top {
     display: flex;

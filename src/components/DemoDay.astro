@@ -8,8 +8,7 @@ const d = c.demoDay;
 <section class="section demoday-section" id="demoday">
   <div class="container">
     <div class="demoday card" data-reveal>
-      <div class="dd-glow" aria-hidden="true"></div>
-      <div class="dd-head">
+        <div class="dd-head">
         <p class="eyebrow">{d.eyebrow}</p>
         <h2>{d.title}</h2>
         <p class="lead">{d.subtitle}</p>
@@ -47,18 +46,8 @@ const d = c.demoDay;
     gap: 56px;
     align-items: center;
     padding: clamp(40px, 6vw, 64px);
-    border-color: var(--border-red);
-    background: linear-gradient(125deg, rgba(255, 36, 36, 0.1), var(--surface) 55%);
-  }
-  .dd-glow {
-    position: absolute;
-    top: -30%;
-    right: -10%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(255, 36, 36, 0.22), transparent 62%);
-    filter: blur(40px);
-    pointer-events: none;
+    border-color: var(--border);
+    background: var(--surface-2);
   }
   .dd-head {
     position: relative;
@@ -108,10 +97,7 @@ const d = c.demoDay;
     font-weight: 800;
     font-size: clamp(2rem, 3.6vw, 2.8rem);
     line-height: 1;
-    background: linear-gradient(150deg, #fff, #ffc9c9 70%, var(--red-400));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--text);
   }
   .dd-stat-label {
     display: block;

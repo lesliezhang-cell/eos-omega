@@ -8,7 +8,6 @@ const m = c.community;
 <section class="section" id="community">
   <div class="container">
     <div class="community card" data-reveal>
-      <div class="cm-glow" aria-hidden="true"></div>
       <div class="cm-head">
         <p class="eyebrow">{m.eyebrow}</p>
         <h2>{m.title}</h2>
@@ -51,18 +50,8 @@ const m = c.community;
     gap: 48px;
     align-items: center;
     padding: clamp(40px, 6vw, 60px);
-    border-color: var(--border-red);
-    background: linear-gradient(125deg, rgba(255, 36, 36, 0.09), var(--surface) 55%);
-  }
-  .cm-glow {
-    position: absolute;
-    bottom: -40%;
-    left: -8%;
-    width: 460px;
-    height: 460px;
-    background: radial-gradient(circle, rgba(255, 36, 36, 0.2), transparent 62%);
-    filter: blur(40px);
-    pointer-events: none;
+    border-color: var(--border);
+    background: var(--surface-2);
   }
   .cm-head {
     position: relative;
@@ -89,10 +78,7 @@ const m = c.community;
     font-weight: 800;
     font-size: clamp(1.6rem, 2.8vw, 2.1rem);
     line-height: 1;
-    background: linear-gradient(150deg, #fff, #ffc9c9 70%, var(--red-400));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--text);
   }
   .cm-stat-label {
     display: block;

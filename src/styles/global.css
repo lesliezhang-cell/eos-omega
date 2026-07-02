@@ -1,44 +1,44 @@
 /* ==========================================================================
    EOS OMEGA ACCELERATION — Design System
-   Dark premium · crimson red glow · geometric / crystalline
+   Western tech restraint · neutral near-black · red used as a precise accent
    ========================================================================== */
 
 :root {
-  /* ---- Surfaces (warm near-black) ---- */
-  --bg-0: #070405;
-  --bg-1: #0c0708;
-  --bg-2: #130c0e;
-  --bg-3: #1b1114;
-  --surface: rgba(255, 245, 245, 0.025);
-  --surface-2: rgba(255, 245, 245, 0.04);
+  /* ---- Surfaces (neutral near-black, no warm tint) ---- */
+  --bg-0: #060608;
+  --bg-1: #0a0a0c;
+  --bg-2: #101012;
+  --bg-3: #17171a;
+  --surface: rgba(255, 255, 255, 0.02);
+  --surface-2: rgba(255, 255, 255, 0.035);
 
-  /* ---- Brand red (the Omega glow) ---- */
-  --red-300: #ff7a7a;
-  --red-400: #ff4d4d;
-  --red-500: #ff2424;
-  --red-600: #e0121b;
-  --red-700: #b10a12;
-  --red-800: #7e0309;
-  --red-900: #4a0205;
+  /* ---- Brand red (accent only) ---- */
+  --red-300: #ff8a8a;
+  --red-400: #ff5c5c;
+  --red-500: #f5333a;
+  --red-600: #e01e26;
+  --red-700: #b3151b;
+  --red-800: #7d0d12;
+  --red-900: #4a070a;
 
-  --brand-gradient: linear-gradient(135deg, #ff3a3a 0%, #c40912 55%, #6b0008 100%);
-  --brand-gradient-soft: linear-gradient(135deg, #ff5a5a 0%, #e0121b 100%);
+  --brand-gradient: linear-gradient(180deg, #f5333a 0%, #d51920 100%);
+  --brand-gradient-soft: linear-gradient(120deg, #ff6a6a 0%, #e01e26 100%);
 
-  /* ---- Text ---- */
-  --text: #f7f2f3;
-  --text-muted: #b9abae;
-  --text-dim: #79696d;
+  /* ---- Text (neutral grays) ---- */
+  --text: #f4f4f6;
+  --text-muted: #9a9aa3;
+  --text-dim: #5f5f68;
 
-  /* ---- Lines ---- */
-  --border: rgba(255, 240, 240, 0.08);
-  --border-strong: rgba(255, 240, 240, 0.15);
-  --border-red: rgba(255, 56, 56, 0.34);
+  /* ---- Lines (neutral hairlines) ---- */
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --border-red: rgba(245, 51, 58, 0.3);
 
-  /* ---- Glow ---- */
-  --glow-sm: 0 0 24px rgba(255, 40, 40, 0.28);
-  --glow-md: 0 0 44px rgba(255, 40, 40, 0.32), 0 0 90px rgba(255, 20, 20, 0.16);
-  --glow-lg: 0 0 70px rgba(255, 44, 44, 0.4), 0 0 140px rgba(255, 20, 20, 0.22);
-  --shadow-card: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+  /* ---- Elevation (neutral, NO color glow) ---- */
+  --glow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --glow-md: 0 12px 30px -14px rgba(0, 0, 0, 0.65);
+  --glow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
+  --shadow-card: 0 20px 48px -28px rgba(0, 0, 0, 0.85);
 
   /* ---- Type ---- */
   --font-display: 'Sora', system-ui, -apple-system, sans-serif;
@@ -48,8 +48,8 @@
   /* ---- Layout ---- */
   --maxw: 1200px;
   --maxw-narrow: 820px;
-  --radius: 14px;
-  --radius-lg: 22px;
+  --radius: 8px;
+  --radius-lg: 14px;
   --nav-h: 72px;
 
   /* ---- Motion ---- */
@@ -127,28 +127,24 @@ ol {
 }
 
 /* ==========================================================================
-   Page background — heat-map ambience
+   Page background — flat neutral with a whisper of technical grid
    ========================================================================== */
 .page-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(1100px 700px at 78% -8%, rgba(255, 34, 34, 0.16), transparent 60%),
-    radial-gradient(900px 700px at 8% 4%, rgba(123, 4, 9, 0.18), transparent 55%),
-    radial-gradient(1200px 900px at 50% 120%, rgba(255, 30, 30, 0.07), transparent 60%),
-    var(--bg-1);
+  background: var(--bg-1);
 }
 .page-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 20%, transparent 75%);
-  opacity: 0.5;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 65% at 50% -5%, #000 25%, transparent 78%);
+  opacity: 0.7;
 }
 
 /* ==========================================================================
@@ -160,13 +156,13 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
   color: var(--text);
 }
 
 h1 {
-  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-size: clamp(2.7rem, 6.2vw, 5rem);
 }
 h2 {
   font-size: clamp(2rem, 4vw, 3.1rem);
@@ -180,33 +176,29 @@ p {
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, #fff 0%, #ffd2d2 38%, var(--red-500) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
 }
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--red-400);
+  color: var(--text-muted);
   display: inline-flex;
   align-items: center;
-  gap: 0.6em;
+  gap: 0.7em;
 }
 .eyebrow::before {
   content: '';
-  width: 26px;
+  width: 22px;
   height: 1px;
   background: var(--red-500);
-  box-shadow: var(--glow-sm);
 }
 
 .lead {
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
   color: var(--text-muted);
   line-height: 1.65;
 }
@@ -222,20 +214,23 @@ p {
 }
 
 .section {
-  padding-block: clamp(72px, 11vw, 130px);
+  padding-block: clamp(80px, 12vw, 150px);
   position: relative;
 }
 
 .section-head {
   max-width: 720px;
-  margin-bottom: 56px;
+  margin-bottom: 60px;
 }
 .section-head.center {
   margin-inline: auto;
   text-align: center;
 }
+.section-head.center .eyebrow {
+  justify-content: center;
+}
 .section-head .eyebrow {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 .section-head p {
   margin-top: 18px;
@@ -244,7 +239,7 @@ p {
 
 .divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  background: var(--border);
 }
 
 /* ==========================================================================
@@ -255,20 +250,20 @@ p {
   align-items: center;
   justify-content: center;
   gap: 0.55em;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.01em;
-  padding: 0.85em 1.5em;
-  border-radius: 10px;
-  transition: transform 0.25s var(--ease), box-shadow 0.3s var(--ease),
-    background 0.25s var(--ease), border-color 0.25s var(--ease);
+  font-size: 0.94rem;
+  letter-spacing: -0.01em;
+  padding: 0.8em 1.4em;
+  border-radius: var(--radius);
+  transition: transform 0.2s var(--ease), box-shadow 0.25s var(--ease),
+    background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
   white-space: nowrap;
 }
 .btn svg {
-  width: 18px;
-  height: 18px;
-  transition: transform 0.25s var(--ease);
+  width: 17px;
+  height: 17px;
+  transition: transform 0.2s var(--ease);
 }
 .btn:hover svg {
   transform: translateX(3px);
@@ -277,60 +272,46 @@ p {
 .btn-primary {
   background: var(--brand-gradient);
   color: #fff;
-  box-shadow: var(--glow-sm);
 }
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--glow-md);
+  filter: brightness(1.06);
 }
 
 .btn-ghost {
   border: 1px solid var(--border-strong);
   color: var(--text);
-  background: var(--surface);
+  background: transparent;
 }
 .btn-ghost:hover {
-  border-color: var(--border-red);
-  background: var(--surface-2);
-  transform: translateY(-2px);
+  border-color: var(--text-dim);
+  background: var(--surface);
 }
 
 .btn-lg {
-  padding: 1.05em 1.9em;
-  font-size: 1.02rem;
+  padding: 0.95em 1.7em;
+  font-size: 1rem;
 }
 
 /* ==========================================================================
    Cards & surfaces
    ========================================================================== */
 .card {
-  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 32px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease),
-    box-shadow 0.35s var(--ease);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease),
+    background 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 .card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-red);
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
   box-shadow: var(--shadow-card);
-}
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--red-500), transparent);
-  opacity: 0;
-  transition: opacity 0.35s var(--ease);
-}
-.card:hover::before {
-  opacity: 0.7;
 }
 
 /* Chip / tag */
@@ -339,21 +320,20 @@ p {
   align-items: center;
   gap: 0.5em;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
-  padding: 0.4em 0.85em;
+  padding: 0.4em 0.8em;
   border: 1px solid var(--border);
-  border-radius: 100px;
+  border-radius: 6px;
   background: var(--surface);
 }
 .chip .dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--red-500);
-  box-shadow: var(--glow-sm);
 }
 
 /* ==========================================================================
@@ -361,8 +341,8 @@ p {
    ========================================================================== */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
 [data-reveal].is-visible {
@@ -405,7 +385,7 @@ p {
 }
 
 .glow-text {
-  text-shadow: 0 0 30px rgba(255, 40, 40, 0.5);
+  /* text glow removed — keep type crisp */
 }
 .mono {
   font-family: var(--font-mono);

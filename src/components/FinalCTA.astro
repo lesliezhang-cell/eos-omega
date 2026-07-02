@@ -10,8 +10,7 @@ const aboutHref = localizePath('/about', lang);
 <section class="section cta-section">
   <div class="container">
     <div class="cta-box" data-reveal>
-      <div class="cta-glow" aria-hidden="true"></div>
-      <p class="eyebrow">{c.finalCta.eyebrow}</p>
+        <p class="eyebrow">{c.finalCta.eyebrow}</p>
       <h2>{c.finalCta.title}</h2>
       <p class="lead">{c.finalCta.subtitle}</p>
       <div class="cta-actions">
@@ -34,20 +33,9 @@ const aboutHref = localizePath('/about', lang);
     overflow: hidden;
     text-align: center;
     padding: clamp(48px, 7vw, 88px) 32px;
-    border: 1px solid var(--border-red);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, rgba(255, 36, 36, 0.08), var(--surface));
-  }
-  .cta-glow {
-    position: absolute;
-    top: -40%;
-    left: 50%;
-    width: 600px;
-    height: 600px;
-    transform: translateX(-50%);
-    background: radial-gradient(circle, rgba(255, 36, 36, 0.22), transparent 60%);
-    filter: blur(30px);
-    pointer-events: none;
+    background: var(--surface-2);
   }
   .cta-box > * {
     position: relative;

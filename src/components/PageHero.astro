@@ -10,7 +10,6 @@ const { eyebrow, title, subtitle } = Astro.props;
 
 <section class="page-hero">
   <div class="page-hero-mark" aria-hidden="true"><BrandMark size={360} glow={false} id="ph" /></div>
-  <div class="page-hero-halo" aria-hidden="true"></div>
   <div class="container">
     <p class="eyebrow" data-reveal>{eyebrow}</p>
     <h1 data-reveal style="--reveal-delay:60ms">{title}</h1>
@@ -29,17 +28,7 @@ const { eyebrow, title, subtitle } = Astro.props;
     position: absolute;
     top: 10%;
     right: -40px;
-    opacity: 0.06;
-    pointer-events: none;
-  }
-  .page-hero-halo {
-    position: absolute;
-    top: -120px;
-    right: 8%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(255, 36, 36, 0.16), transparent 62%);
-    filter: blur(40px);
+    opacity: 0.035;
     pointer-events: none;
   }
   .page-hero .container {
