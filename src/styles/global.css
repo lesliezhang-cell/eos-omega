@@ -127,26 +127,7 @@ ol {
   color: #fff;
 }
 
-/* ==========================================================================
-   Page background — flat neutral with a whisper of technical grid
-   ========================================================================== */
-.page-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: var(--bg-1);
-}
-.page-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 90% 65% at 50% -5%, #000 25%, transparent 78%);
-  opacity: 0.7;
-}
+/* Page background lives in components/Background.astro (grid, beams, grain) */
 
 /* ==========================================================================
    Typography
@@ -314,6 +295,24 @@ p {
   background: var(--surface-2);
   box-shadow: var(--shadow-card);
 }
+/* Pointer spotlight — a faint light that follows the cursor inside the card */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--cx, 50%) var(--cy, 50%),
+    rgba(255, 255, 255, 0.055),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.card:hover::after {
+  opacity: 1;
+}
 
 /* Chip / tag */
 .chip {
@@ -335,6 +334,16 @@ p {
   height: 5px;
   border-radius: 50%;
   background: var(--red-500);
+  animation: pingDot 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes pingDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0);
+  }
 }
 
 /* ==========================================================================

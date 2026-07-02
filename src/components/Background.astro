@@ -1,0 +1,116 @@
+---
+/**
+ * Ambient background system — restrained, monochrome, Western-tech.
+ *  - faint technical grid
+ *  - cursor-following grid reveal (brighter lines near pointer)
+ *  - ultra-subtle drifting ambient light + film grain
+ * All motion respects prefers-reduced-motion.
+ */
+---
+
+<div class="bg" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-grid-bright" id="bg-grid-bright"></div>
+  <div class="bg-ambient"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<style>
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg-1);
+  }
+  .bg > * {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Faint base grid, strongest near the top */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 95% 70% at 50% -5%, #000 25%, transparent 80%);
+  }
+
+  /* Brighter grid revealed in a circle around the cursor */
+  .bg-grid-bright {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, -400px),
+      #000 0%,
+      transparent 72%
+    );
+  }
+
+  /* One very dim white light, drifting slowly — depth without color glow */
+  .bg-ambient {
+    inset: auto;
+    top: -22%;
+    left: 50%;
+    width: 920px;
+    height: 920px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.045), transparent 62%);
+    filter: blur(52px);
+    animation: ambientDrift 30s ease-in-out infinite alternate;
+  }
+  @keyframes ambientDrift {
+    from {
+      transform: translate(-62%, -3%);
+    }
+    to {
+      transform: translate(-38%, 7%);
+    }
+  }
+
+  /* Film grain */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    opacity: 0.05;
+  }
+</style>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+  /* ---- Cursor: grid reveal + card spotlight ------------------------------ */
+  if (finePointer && !reduced) {
+    const bright = document.getElementById('bg-grid-bright');
+    let mx = 0,
+      my = 0,
+      raf = 0;
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        const t = e.target as Element | null;
+        const card = t && 'closest' in t ? (t.closest('.card') as HTMLElement | null) : null;
+        if (card) {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--cx', `${e.clientX - r.left}px`);
+          card.style.setProperty('--cy', `${e.clientY - r.top}px`);
+        }
+        if (!raf) {
+          raf = requestAnimationFrame(() => {
+            raf = 0;
+            bright?.style.setProperty('--mx', `${mx}px`);
+            bright?.style.setProperty('--my', `${my}px`);
+          });
+        }
+      },
+      { passive: true }
+    );
+  }
+
+</script>
