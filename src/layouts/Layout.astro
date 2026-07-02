@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/geist';
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Background from '../components/Background.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -45,6 +46,8 @@ const pageDesc = description ?? c.hero.subtitle;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <ClientRouter />
   </head>
   <body>
     <Background />
@@ -55,9 +58,13 @@ const pageDesc = description ?? c.hero.subtitle;
     <Footer />
 
     <script>
-      // Reveal-on-scroll
-      const els = document.querySelectorAll('[data-reveal]');
-      if ('IntersectionObserver' in window && els.length) {
+      // Reveal-on-scroll — re-inits after every ClientRouter navigation.
+      function initReveal() {
+        const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((e) => {
@@ -69,10 +76,58 @@ const pageDesc = description ?? c.hero.subtitle;
           },
           { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
         );
-        els.forEach((el) => io.observe(el));
-      } else {
-        els.forEach((el) => el.classList.add('is-visible'));
+        els.forEach((el) => {
+          if ((el as any).__ob) return;
+          (el as any).__ob = 1;
+          io.observe(el);
+        });
       }
+
+      // Count-up for stat values when they enter the viewport.
+      function initCounters() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const els = document.querySelectorAll<HTMLElement>(
+          '.stat-value, .pf-agg-val, .dd-stat-val, .cm-stat-val'
+        );
+        els.forEach((el) => {
+          if ((el as any).__count) return;
+          (el as any).__count = 1;
+          const final = el.textContent ?? '';
+          const m = final.match(/^([^0-9]*)([0-9]+(?:\.[0-9]+)?)(.*)$/);
+          if (!m) return;
+          const pre = m[1];
+          const target = parseFloat(m[2]);
+          const decimals = (m[2].split('.')[1] || '').length;
+          const suf = m[3];
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                io.unobserve(el);
+                const t0 = performance.now();
+                const D = 1200;
+                const step = (t: number) => {
+                  const p = Math.min(1, (t - t0) / D);
+                  const eased = 1 - Math.pow(1 - p, 3);
+                  el.textContent = pre + (target * eased).toFixed(decimals) + suf;
+                  if (p < 1) requestAnimationFrame(step);
+                  else el.textContent = final;
+                };
+                requestAnimationFrame(step);
+              });
+            },
+            { threshold: 0.5 }
+          );
+          io.observe(el);
+        });
+      }
+
+      const initPage = () => {
+        initReveal();
+        initCounters();
+      };
+      initPage();
+      document.addEventListener('astro:page-load', initPage);
     </script>
   </body>
 </html>

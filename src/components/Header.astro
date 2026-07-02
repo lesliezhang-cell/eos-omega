@@ -215,16 +215,28 @@ const applyHref = localizePath('/apply', lang);
 </style>
 
 <script>
-  const header = document.getElementById('site-header');
-  const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 12);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  // ClientRouter-safe: query live elements, bind window listener once.
+  const onScroll = () =>
+    document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 12);
 
-  const btn = document.getElementById('menu-btn');
-  const panel = document.getElementById('mobile-panel');
-  btn?.addEventListener('click', () => {
-    const open = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!open));
-    if (panel) panel.hidden = open;
-  });
+  if (!(window as any).__omegaHeader) {
+    (window as any).__omegaHeader = 1;
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  function initHeader() {
+    onScroll();
+    const btn = document.getElementById('menu-btn');
+    const panel = document.getElementById('mobile-panel');
+    if (btn && !btn.dataset.bound) {
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        if (panel) panel.hidden = open;
+      });
+    }
+  }
+  initHeader();
+  document.addEventListener('astro:page-load', initHeader);
 </script>

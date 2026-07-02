@@ -15,26 +15,44 @@ const programsHref = localizePath('/programs', lang);
   </div>
 
   <div class="container hero-inner">
-    <div class="hero-badge" data-reveal>
-      <span class="badge-mark"><BrandMark size={20} id="hero-badge" /></span>
-      <span>{c.hero.badge}</span>
+    <span class="htick tick-tr" aria-hidden="true"></span>
+    <span class="htick tick-bl" aria-hidden="true"></span>
+
+    <div class="hero-copy">
+      <div class="hero-badge" data-reveal>
+        <span class="badge-mark"><BrandMark size={20} id="hero-badge" /></span>
+        <span>{c.hero.badge}</span>
+      </div>
+
+      <h1 data-reveal style="--reveal-delay:80ms">
+        {c.hero.titleLead}
+        <span class="hi">{c.hero.titleHi}</span>
+        {c.hero.titleTail}
+      </h1>
+
+      <p class="lead hero-sub" data-reveal style="--reveal-delay:160ms">{c.hero.subtitle}</p>
+
+      <div class="hero-cta" data-reveal style="--reveal-delay:240ms">
+        <a href={applyHref} class="btn btn-primary btn-lg">
+          {c.hero.ctaPrimary}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href={programsHref} class="btn btn-ghost btn-lg">{c.hero.ctaSecondary}</a>
+      </div>
     </div>
 
-    <h1 data-reveal style="--reveal-delay:80ms">
-      {c.hero.titleLead}
-      <span class="hi glow-text">{c.hero.titleHi}</span>
-      {c.hero.titleTail}
-    </h1>
-
-    <p class="lead hero-sub" data-reveal style="--reveal-delay:160ms">{c.hero.subtitle}</p>
-
-    <div class="hero-cta" data-reveal style="--reveal-delay:240ms">
-      <a href={applyHref} class="btn btn-primary btn-lg">
-        {c.hero.ctaPrimary}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href={programsHref} class="btn btn-ghost btn-lg">{c.hero.ctaSecondary}</a>
-    </div>
+    <!-- Terminal artifact — quiet, types once -->
+    <aside class="hero-terminal" data-reveal style="--reveal-delay:320ms" aria-hidden="true">
+      <div class="term-bar">
+        <span class="term-dot"></span>
+        <span class="term-dot"></span>
+        <span class="term-dot"></span>
+        <span class="term-title mono">omega — apply</span>
+      </div>
+      <div class="term-body mono">
+        <span id="term-text"></span><span class="term-caret"></span>
+      </div>
+    </aside>
   </div>
 
   <a href="#stats" class="hero-scroll" aria-label={c.hero.scroll}>
@@ -60,12 +78,52 @@ const programsHref = localizePath('/programs', lang);
     opacity: 0.04;
     pointer-events: none;
     z-index: 0;
+    will-change: transform;
   }
   .hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 920px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 72px;
+    align-items: center;
   }
+
+  /* Blueprint corner ticks */
+  .htick {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    color: rgba(255, 255, 255, 0.16);
+    pointer-events: none;
+  }
+  .htick::before,
+  .htick::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+  }
+  .htick::before {
+    left: 7px;
+    top: 0;
+    width: 1px;
+    height: 15px;
+  }
+  .htick::after {
+    top: 7px;
+    left: 0;
+    height: 1px;
+    width: 15px;
+  }
+  .tick-tr {
+    top: -36px;
+    right: 24px;
+  }
+  .tick-bl {
+    bottom: -36px;
+    left: 24px;
+  }
+
   .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -75,7 +133,6 @@ const programsHref = localizePath('/programs', lang);
     border-radius: 100px;
     background: var(--surface);
     font-size: 0.85rem;
-    color: var(--text);
     margin-bottom: 30px;
   }
   .badge-mark {
@@ -89,7 +146,7 @@ const programsHref = localizePath('/programs', lang);
   }
   .hero-sub {
     margin-top: 28px;
-    max-width: 60ch;
+    max-width: 58ch;
   }
   .hero-cta {
     margin-top: 40px;
@@ -97,6 +154,58 @@ const programsHref = localizePath('/programs', lang);
     gap: 16px;
     flex-wrap: wrap;
   }
+
+  /* ---- Terminal ---- */
+  .hero-terminal {
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    background: rgba(10, 10, 13, 0.85);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+  }
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .term-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .term-title {
+    margin-left: 10px;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+  }
+  .term-body {
+    padding: 20px 18px;
+    font-size: 0.78rem;
+    line-height: 2;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    min-height: 232px;
+  }
+  .term-caret {
+    display: inline-block;
+    width: 7px;
+    height: 1em;
+    margin-left: 2px;
+    background: var(--text-muted);
+    vertical-align: -0.15em;
+    animation: caretBlink 1.1s steps(1) infinite;
+  }
+  @keyframes caretBlink {
+    50% {
+      opacity: 0;
+    }
+  }
+
   .hero-scroll {
     position: absolute;
     bottom: 30px;
@@ -116,7 +225,7 @@ const programsHref = localizePath('/programs', lang);
   .scroll-line {
     width: 1px;
     height: 42px;
-    background: linear-gradient(var(--red-500), transparent);
+    background: linear-gradient(rgba(255, 255, 255, 0.4), transparent);
     animation: scrollPulse 2.2s var(--ease) infinite;
   }
   @keyframes scrollPulse {
@@ -132,12 +241,75 @@ const programsHref = localizePath('/programs', lang);
       transform-origin: top;
     }
   }
+
+  @media (max-width: 1100px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-terminal {
+      display: none;
+    }
+    .htick {
+      display: none;
+    }
+  }
   @media (max-width: 640px) {
     .hero-cta .btn {
       width: 100%;
     }
     .hero-mark {
-      opacity: 0.05;
+      opacity: 0.03;
     }
   }
 </style>
+
+<script>
+  /* Terminal: type the readout once, keep the caret blinking. */
+  const TERM_LINES = [
+    '$ omega apply --cohort 04',
+    '',
+    '▸ track         flagship · seed',
+    '▸ investment    $150,000',
+    '▸ review        ≤ 10 business days',
+    '▸ demo day      DEC 09 2026',
+    '',
+    '✓ applications open — rolling',
+  ];
+
+  function initTerminal() {
+    const el = document.getElementById('term-text');
+    if (!el || (el as any).__typed) return;
+    (el as any).__typed = 1;
+    const full = TERM_LINES.join('\n');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = full;
+      return;
+    }
+    let i = 0;
+    const tick = () => {
+      // type 2 chars per frame for a brisk but readable pace
+      i = Math.min(full.length, i + 2);
+      el.textContent = full.slice(0, i);
+      if (i < full.length) requestAnimationFrame(tick);
+    };
+    setTimeout(() => requestAnimationFrame(tick), 650);
+  }
+
+  /* Subtle parallax on the watermark. */
+  function onHeroScroll() {
+    const mark = document.querySelector<HTMLElement>('.hero-mark');
+    if (!mark) return;
+    const y = window.scrollY * 0.1;
+    mark.style.transform = `translate(-50%, calc(-50% + ${y}px))`;
+  }
+
+  if (!(window as any).__omegaHero) {
+    (window as any).__omegaHero = 1;
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.addEventListener('scroll', onHeroScroll, { passive: true });
+    }
+  }
+
+  initTerminal();
+  document.addEventListener('astro:page-load', initTerminal);
+</script>

@@ -240,19 +240,25 @@ const f = c.apply.form;
 </style>
 
 <script>
-  const form = document.getElementById('apply-form') as HTMLFormElement | null;
-  const success = document.getElementById('form-success');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    // TODO: replace with a real submission (fetch to your endpoint / Formspree).
-    form.querySelectorAll('input, select, textarea, button').forEach((el) => {
-      (el as HTMLElement).setAttribute('disabled', 'true');
+  function initApplyForm() {
+    const form = document.getElementById('apply-form') as HTMLFormElement | null;
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = '1';
+    const success = document.getElementById('form-success');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      // TODO: replace with a real submission (fetch to your endpoint / Formspree).
+      form.querySelectorAll('input, select, textarea, button').forEach((el) => {
+        (el as HTMLElement).setAttribute('disabled', 'true');
+      });
+      if (success) success.hidden = false;
+      success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
-    if (success) success.hidden = false;
-    success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
+  }
+  initApplyForm();
+  document.addEventListener('astro:page-load', initApplyForm);
 </script>

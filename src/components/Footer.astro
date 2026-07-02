@@ -18,6 +18,7 @@ const social = [
 
 <footer class="site-footer">
   <div class="container">
+    <div class="footer-word" aria-hidden="true">OMEGA</div>
     <div class="footer-top">
       <div class="footer-brand">
         <Logo size={40} id="ftr" />
@@ -62,8 +63,22 @@ const social = [
 <style>
   .site-footer {
     border-top: 1px solid var(--border);
-    padding-block: 72px 40px;
+    padding-block: 64px 40px;
     margin-top: 40px;
+    overflow: hidden;
+  }
+  /* Giant outlined wordmark — editorial sign-off */
+  .footer-word {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(4.6rem, 16vw, 12.5rem);
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+    user-select: none;
+    margin-bottom: 56px;
+    white-space: nowrap;
   }
   .footer-top {
     display: grid;
