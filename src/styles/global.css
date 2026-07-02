@@ -12,17 +12,18 @@
   --surface: rgba(255, 255, 255, 0.02);
   --surface-2: rgba(255, 255, 255, 0.035);
 
-  /* ---- Brand red (accent only) ---- */
-  --red-300: #ff8a8a;
-  --red-400: #ff5c5c;
-  --red-500: #f5333a;
-  --red-600: #e01e26;
-  --red-700: #b3151b;
+  /* ---- Accent red — reserved for the primary CTA + brand mark ---- */
+  --brand-gradient: linear-gradient(180deg, #e5322d 0%, #c4171c 100%);
+  --brand-gradient-soft: linear-gradient(120deg, #ff6a6a 0%, #e01e26 100%);
+
+  /* Incidental accents are NEUTRAL in the monochrome theme (repurposed grays) */
+  --red-300: #b4b4bb;
+  --red-400: #dcdce0;
+  --red-500: #c8c8ce;
+  --red-600: #e5322d; /* text selection */
+  --red-700: #6b6b73;
   --red-800: #7d0d12;
   --red-900: #4a070a;
-
-  --brand-gradient: linear-gradient(180deg, #f5333a 0%, #d51920 100%);
-  --brand-gradient-soft: linear-gradient(120deg, #ff6a6a 0%, #e01e26 100%);
 
   /* ---- Text (neutral grays) ---- */
   --text: #f4f4f6;
@@ -32,7 +33,7 @@
   /* ---- Lines (neutral hairlines) ---- */
   --border: rgba(255, 255, 255, 0.07);
   --border-strong: rgba(255, 255, 255, 0.13);
-  --border-red: rgba(245, 51, 58, 0.3);
+  --border-red: rgba(255, 255, 255, 0.18);
 
   /* ---- Elevation (neutral, NO color glow) ---- */
   --glow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -41,7 +42,7 @@
   --shadow-card: 0 20px 48px -28px rgba(0, 0, 0, 0.85);
 
   /* ---- Type ---- */
-  --font-display: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-display: 'Geist Variable', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
@@ -165,7 +166,7 @@ h1 {
   font-size: clamp(2.7rem, 6.2vw, 5rem);
 }
 h2 {
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: clamp(2.1rem, 4.6vw, 3.7rem);
 }
 h3 {
   font-size: clamp(1.3rem, 2vw, 1.6rem);
@@ -198,9 +199,9 @@ p {
 }
 
 .lead {
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.1rem, 1.7vw, 1.3rem);
   color: var(--text-muted);
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 /* ==========================================================================
@@ -219,8 +220,8 @@ p {
 }
 
 .section-head {
-  max-width: 720px;
-  margin-bottom: 60px;
+  max-width: 760px;
+  margin-bottom: 76px;
 }
 .section-head.center {
   margin-inline: auto;
