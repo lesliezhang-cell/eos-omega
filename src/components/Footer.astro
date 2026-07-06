@@ -24,6 +24,7 @@ const social = [
         <Logo size={40} id="ftr" />
         <p class="footer-tagline">{c.footer.tagline}</p>
         <div class="chip"><span class="dot"></span>{c.official}</div>
+        <a href={localizePath('/legal', lang)} class="compliance-badge mono">{c.compliance.footerBadge} →</a>
       </div>
 
       <div class="footer-cols">
@@ -53,6 +54,7 @@ const social = [
       </div>
       <div class="footer-legal">
         {c.footer.legal.map((l) => <a href={localizePath('/', lang)}>{l}</a>)}
+        <a href={localizePath('/legal', lang)}>{c.compliance.eyebrow}</a>
       </div>
     </div>
 
@@ -89,6 +91,17 @@ const social = [
   .footer-tagline {
     margin: 22px 0 18px;
     max-width: 320px;
+    color: var(--text-muted);
+  }
+  .compliance-badge {
+    display: inline-flex;
+    margin-top: 14px;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+  .compliance-badge:hover {
     color: var(--text-muted);
   }
   .footer-cols {

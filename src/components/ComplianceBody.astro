@@ -1,0 +1,158 @@
+---
+import PageHero from './PageHero.astro';
+import FinalCTA from './FinalCTA.astro';
+import { getContent } from '../i18n/content';
+import { getLangFromUrl } from '../i18n/config';
+
+const lang = getLangFromUrl(Astro.url);
+const c = getContent(lang);
+const p = c.compliance;
+---
+
+<PageHero eyebrow={p.eyebrow} title={p.title} subtitle={p.intro} />
+
+<section class="section compliance-section">
+  <div class="container">
+    <div class="compliance-grid">
+      <!-- Record, styled as a terminal readout to match the Hero terminal -->
+      <div class="record card" data-reveal>
+        <div class="term-bar">
+          <span class="term-dot"></span>
+          <span class="term-dot"></span>
+          <span class="term-dot"></span>
+          <span class="term-title mono">{p.recordLabel}</span>
+        </div>
+        <dl class="record-body mono">
+          {
+            p.fields.map((f) => (
+              <div class="record-row">
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <aside class="compliance-aside">
+        <div class="aside-block" data-reveal style="--reveal-delay:80ms">
+          <p class="eyebrow">{p.verifyTitle}</p>
+          <p>{p.verify}</p>
+        </div>
+        <div class="aside-block warn" data-reveal style="--reveal-delay:160ms">
+          <p class="eyebrow">{p.disclaimerTitle}</p>
+          <p>{p.disclaimer}</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<FinalCTA />
+
+<style>
+  .compliance-section {
+    padding-top: 10px;
+  }
+  .compliance-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ---- Record card (terminal readout) ---- */
+  .record {
+    padding: 0;
+    overflow: hidden;
+  }
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .term-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .term-title {
+    margin-left: 10px;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+  .record-body {
+    padding: 26px 28px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .record-row {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .record-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .record-row dt {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  .record-row dt::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 10px;
+    background: var(--red-500);
+    vertical-align: middle;
+  }
+  .record-row dd {
+    font-size: 0.86rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ---- Aside ---- */
+  .compliance-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .aside-block {
+    padding: 26px 28px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+  .aside-block .eyebrow {
+    margin-bottom: 14px;
+  }
+  .aside-block p:not(.eyebrow) {
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+  .aside-block.warn {
+    border-color: var(--border-strong);
+    background: var(--surface-2);
+  }
+
+  @media (max-width: 900px) {
+    .compliance-grid {
+      grid-template-columns: 1fr;
+    }
+    .record-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+</style>
