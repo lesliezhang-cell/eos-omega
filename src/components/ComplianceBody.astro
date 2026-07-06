@@ -39,12 +39,9 @@ const p = c.compliance;
           <p class="eyebrow">{p.verifyTitle}</p>
           <p>{p.verify}</p>
         </div>
-        <div class="aside-block warn" data-reveal style="--reveal-delay:160ms">
-          <p class="eyebrow">{p.disclaimerTitle}</p>
-          <p>{p.disclaimer}</p>
-        </div>
       </aside>
     </div>
+    <p class="compliance-note mono" data-reveal style="--reveal-delay:160ms">{p.disclaimer}</p>
   </div>
 </section>
 
@@ -141,9 +138,14 @@ const p = c.compliance;
     font-size: 0.93rem;
     line-height: 1.7;
   }
-  .aside-block.warn {
-    border-color: var(--border-strong);
-    background: var(--surface-2);
+
+  /* Quiet footnote, matching the site's other "placeholder / source" notes */
+  .compliance-note {
+    margin-top: 24px;
+    font-size: 0.76rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 76ch;
   }
 
   @media (max-width: 900px) {

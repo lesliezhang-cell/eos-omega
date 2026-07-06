@@ -432,9 +432,8 @@ const en = {
     verifyTitle: 'Verify it yourself',
     verify:
       'This record is drawn from FinCEN\'s public MSB Registrant Search. Search registration number 31000333830770 at fincen.gov to confirm it independently — we\'d rather you check than take our word for it.',
-    disclaimerTitle: 'What this registration does — and does not — mean',
     disclaimer:
-      'MSB registration is a compliance filing, not a government endorsement. FinCEN states this explicitly on every registration record: "FinCEN does not recommend, approve, or endorse any business that registers as a money services business. Any such claim and similar claims are false and may be part of a scam or attempt to deceive consumers." We publish this record because operating under real regulatory obligations — and being transparent about it — is a meaningful signal in an industry where most entities choose not to.',
+      'MSB registration is a compliance filing, not a government endorsement — FinCEN does not recommend, approve, or endorse any business that registers as a money services business.',
   },
 };
 
@@ -841,9 +840,8 @@ const zh: typeof en = {
     verifyTitle: '欢迎自行核实',
     verify:
       '这条记录取自 FinCEN 官方的 MSB 注册商查询系统。你可以在 fincen.gov 用注册号 31000333830770 独立核实——比起相信我们的一面之词，我们更希望你自己去查。',
-    disclaimerTitle: '这项注册意味着什么，又不意味着什么',
     disclaimer:
-      'MSB 注册是一项合规备案，不是政府认证或背书。FinCEN 在每一条注册记录上都明确写着："FinCEN 不推荐、不批准、也不为任何注册为货币服务业务的公司背书。任何此类声明及类似说法均为虚假，且可能是骗局或欺骗消费者的行为的一部分。"我们公开这条记录，是因为在一个大多数实体选择不公开的行业里，在真实的监管义务下运作、并对此保持透明，本身就是一个有意义的信号。',
+      'MSB 注册是一项合规备案，不是政府认证或背书——FinCEN 不推荐、不批准、也不为任何注册为货币服务业务的公司背书。',
   },
 };
 
