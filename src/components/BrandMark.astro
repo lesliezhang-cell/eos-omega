@@ -1,8 +1,8 @@
 ---
 /**
- * EOS OMEGA brandmark — vector recreation of the official logo
- * (Ω ring + EOS crystal). Master: reference/brand/mark.svg → public/brand-mark.svg.
- * Crisp at any size; logo-original.jpeg is the visual reference.
+ * EOS OMEGA brandmark — the official artwork itself, professionally keyed
+ * (soft matte + white un-blend, reflections preserved) from
+ * reference/brand/logo-original.jpeg via reference/brand/process_logo.py.
  */
 interface Props {
   size?: number;
@@ -11,7 +11,7 @@ interface Props {
   id?: string;
 }
 const { size = 48, class: klass = '' } = Astro.props;
-const src = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/brand-mark.svg`;
+const src = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/brand-mark.webp`;
 ---
 
 <img

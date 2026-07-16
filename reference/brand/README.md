@@ -2,48 +2,34 @@
 
 | File | Role |
 |---|---|
-| `mark.svg` | **MASTER** — hand-recreated vector of the official mark (Ω + EOS crystal). Edit this. |
-| `logo-original.jpeg` | The official raster logo (1254×1254, red-on-white). Visual reference only. |
+| `logo-original.jpeg` | **The official logo** (1254×1254, red-on-white). Master source. |
+| `process_logo.py` | Extraction pipeline: original → transparent mark + icons. |
 | `og-render.html` | HTML template for the 1200×630 social card. |
-| `process_logo.py` | Composes dark-square icons from the rendered mark. |
-| `brand-lockup.png` | Transparent full lockup extracted from the original (light-bg use). |
+| `mark.svg` | Vector recreation (traced geometry). Kept as backup only — the site ships the original artwork. |
+| `_preview-dark/gray.png` | QA composites of the extraction. |
 
-The mark was rebuilt as vectors by measuring the original (ring ellipses, foot
-polygons, crystal vertices traced row-by-row), so it stays crisp at any size —
-no JPEG artifacts. Crystal nodes: T(626.5,322) V1L/V1R(553/700,426)
-V2L/V2R(522/731,575) B(626.5,650) N(626.5,415), bar y=580, strokes 12.
+## The site ships the ORIGINAL artwork
+`process_logo.py` keys the original professionally: soft alpha matte from
+redness, JPEG-speck cleanup, then **un-blend from white** so semi-transparent
+edge pixels recover their true color (no white fringe, no grey veil). Feet
+reflections are preserved; the wordmark is excluded (the site renders
+"EOS OMEGA / ACCELERATION" as live white text in `Logo.astro`).
 
 ## What ships to `public/`
-- `brand-mark.svg` — copy of the master (used site-wide via `BrandMark.astro`)
-- `brand-mark.png` — 1024 transparent raster (used by the OG card template)
-- `icon-512.png` / `apple-touch-icon.png` (180) / `favicon-32.png` — mark on dark squares
+- `brand-mark.webp` — 1024², ~110 KB (used site-wide via `BrandMark.astro`)
+- `brand-mark.png` — 1024² master raster (used by the OG card template)
+- `icon-512.png` / `apple-touch-icon.png` (180) / `favicon-32.png`
 - `og-card.png` — 1200×630 social card
 
-## Regenerate everything
+## Regenerate
 ```bash
-CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-
-# 0. master SVG → public copy
-cp reference/brand/mark.svg public/brand-mark.svg
-
-# 1. transparent 1024 raster of the mark
-cat > /tmp/mark_wrap.html <<'EOF'
-<!doctype html><html><head><style>html,body{margin:0;padding:0}</style></head>
-<body><img src="file:///ABS/PATH/eos-omega/reference/brand/mark.svg" width="1024" height="1024"></body></html>
-EOF
-"$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
-  --default-background-color=00000000 \
-  --screenshot="$PWD/public/brand-mark.png" --window-size=1024,1024 "file:///tmp/mark_wrap.html"
-
-# 2. icons (needs python3 + Pillow)
+# from repo root — needs python3 + Pillow + numpy
 python3 reference/brand/process_logo.py
 
-# 3. social card → exact 1200×630
+# social card → exact 1200×630
+CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
   --default-background-color=00000000 \
   --screenshot="$PWD/public/og-card.png" --window-size=1200,630 \
   "file://$PWD/reference/brand/og-render.html"
 ```
-
-Note: the wordmark ("EOS OMEGA / ACCELERATION") is live text in `Logo.astro`
-(white, for the dark site); only the mark comes from the artwork.
