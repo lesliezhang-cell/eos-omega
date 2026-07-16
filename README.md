@@ -28,7 +28,16 @@ npm run deploy     # builds + pushes dist/ to the gh-pages branch
 - `src/components/` — section components (Hero, Programs, Portfolio, …)
 - `src/pages/` — routes (EN); `src/pages/zh/` — Chinese routes
 - `src/components/BrandMark.astro` / `EOSMark.astro` — logo marks (swap with official vector assets)
-- `public/` — favicon, `.nojekyll`
+- `public/` — **static assets copied verbatim into `dist/`** (favicon, icons, `og-card.png`, `robots.txt`, `.nojekyll`)
+- `reference/` — **source files that are never deployed** (e.g. `reference/brand/` = SVG/HTML sources for the rasterized icons & OG card). Kept out of `dist/` on purpose.
+
+## Delivery / handoff notes
+- **`dist/` is the whole deployable site.** `npm run build` → `rsync`/upload `dist/` anywhere. Nothing outside `dist/` is needed at runtime.
+- **Weight:** the site is all SVG + CSS + text — `dist/` is ~730 KB with **zero raster photos**. The only PNGs are the social card + app icons (all < 200 KB). No image-compression step is required.
+- **SEO / social:** every page emits `<title>`, unique `<meta description>`, `<link canonical>`, full Open Graph + Twitter Card, and `og:image` → `og-card.png` (1200×630). `robots.txt` + `sitemap-index.xml` are generated on build.
+- **Icons:** square app icon (`icon-512.png`), `apple-touch-icon.png` (180×180), SVG `favicon.svg`. Regenerate from `reference/brand/` — see `reference/brand/README.md`.
+- **Accessibility:** skip-to-content link → `<main id="main-content">`, single `<h1>` per page, landmarks, `prefers-reduced-motion` honored.
+- **Base path:** configured for the GitHub Pages subpath `/eos-omega` in `astro.config.mjs`. Deploying at a domain **root** → set `base: '/'` (or remove it) and rebuild; all links are base-aware via `config.ts`.
 
 ## Before going to production
 The site ships with **professional placeholder content**. Replace:

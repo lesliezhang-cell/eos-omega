@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="r" x1="0.15" y1="0.05" x2="0.85" y2="0.95">
+      <stop offset="0" stop-color="#ff5a5a"/>
+      <stop offset="0.55" stop-color="#e0121b"/>
+      <stop offset="1" stop-color="#7e0309"/>
+    </linearGradient>
+  </defs>
+  <!-- full-bleed dark bg (iOS applies its own mask) -->
+  <rect width="512" height="512" fill="#0a0a0c"/>
+  <!-- omega mark, centered with padding -->
+  <g transform="translate(106,104) scale(2.5)">
+    <path d="M 36 87 A 40 40 0 1 1 84 87" stroke="url(#r)" stroke-width="11" stroke-linecap="round" fill="none"/>
+    <path d="M 20 92 L 42 92" stroke="url(#r)" stroke-width="11" stroke-linecap="round"/>
+    <path d="M 78 92 L 100 92" stroke="url(#r)" stroke-width="11" stroke-linecap="round"/>
+    <g stroke="url(#r)" stroke-width="2.6" stroke-linejoin="round" fill="none">
+      <path d="M60 22 L80 41 L74 67 L60 86 L46 67 L40 41 Z"/>
+      <path d="M40 41 L80 41"/><path d="M60 22 L60 86"/>
+      <path d="M40 41 L60 86"/><path d="M80 41 L60 86"/>
+    </g>
+  </g>
+</svg>
